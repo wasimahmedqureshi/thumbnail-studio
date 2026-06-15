@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PixelForge — AI Image &amp; Thumbnail Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet"
+  />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <header class="app__header">
+      <div class="brand">
+        <span class="brand__mark">◧</span>
+        <span class="brand__name">PixelForge</span>
+      </div>
+      <span class="brand__tag">AI IMAGE &amp; THUMBNAIL STUDIO</span>
+    </header>
+
+    <main class="layout">
+      <aside class="panel">
+        <section class="field-group">
+          <label for="prompt">Prompt</label>
+          <textarea
+            id="prompt"
+            rows="4"
+            placeholder="A neon-lit cyberpunk street market at night, cinematic lighting, ultra detailed"
+          ></textarea>
+        </section>
+
+        <section class="field-group">
+          <label for="negative">Negative prompt <span class="optional">optional</span></label>
+          <textarea id="negative" rows="2" placeholder="blurry, low quality, watermark, text, extra fingers"></textarea>
+        </section>
+
+        <section class="field-row">
+          <div class="field-group">
+            <label for="format">Format</label>
+            <select id="format">
+              <option value="16:9">YouTube Thumbnail — 16:9</option>
+              <option value="1:1">Instagram / FB Post — 1:1</option>
+              <option value="9:16">Reels / Story — 9:16</option>
+              <option value="2:3">Pinterest Pin — 2:3</option>
+              <option value="4:5">Portrait Poster — 4:5</option>
+              <option value="21:9">Wide Banner — 21:9</option>
+              <option value="3:2">Classic Photo — 3:2</option>
+              <option value="5:4">Square Print — 5:4</option>
+              <option value="9:21">Tall Banner — 9:21</option>
+            </select>
+          </div>
+          <div class="field-group">
+            <label for="style">Style</label>
+            <select id="style">
+              <option value="none">None</option>
+              <option value="photographic">Photographic</option>
+              <option value="digital-art">Digital Art</option>
+              <option value="cinematic">Cinematic</option>
+              <option value="anime">Anime</option>
+              <option value="fantasy-art">Fantasy Art</option>
+              <option value="neon-punk">Neon Punk</option>
+              <option value="3d-model">3D Model</option>
+              <option value="comic-book">Comic Book</option>
+              <option value="line-art">Line Art</option>
+            </select>
+          </div>
+        </section>
+
+        <button id="generateBtn" class="btn btn--primary">Generate image</button>
+
+        <div id="genError" class="error" hidden></div>
+
+        <section class="field-group overlay-group">
+          <label for="overlayText">Title text <span class="optional">for thumbnails</span></label>
+          <input type="text" id="overlayText" placeholder="MY EPIC VIDEO TITLE" />
+          <div class="field-row">
+            <div class="field-group">
+              <label for="overlayColor">Color</label>
+              <input type="color" id="overlayColor" value="#ff5a1f" />
+            </div>
+            <div class="field-group">
+              <label for="overlaySize">Size</label>
+              <input type="range" id="overlaySize" min="24" max="160" value="80" />
+            </div>
+          </div>
+          <button id="addTextBtn" class="btn btn--ghost">Stamp text on image</button>
+        </section>
+      </aside>
+
+      <section class="stage">
+        <div class="frame" id="frame">
+          <div class="frame__corner frame__corner--tl"></div>
+          <div class="frame__corner frame__corner--tr"></div>
+          <div class="frame__corner frame__corner--bl"></div>
+          <div class="frame__corner frame__corner--br"></div>
+
+          <canvas id="canvas" hidden></canvas>
+
+          <div class="frame__placeholder" id="placeholder">
+            <p>No image yet</p>
+            <p class="muted">Write a prompt and hit Generate</p>
+          </div>
+
+          <div class="frame__loading" id="loading" hidden>
+            <div class="loading__spinner">
+              <span></span><span></span><span></span>
+              <span></span><span></span><span></span>
+              <span></span><span></span><span></span>
+            </div>
+            <p id="loadingText">Generating…</p>
+          </div>
+        </div>
+
+        <div class="hud" id="hud" hidden>
+          <span>RES <strong id="hudResolution">— × —</strong></span>
+          <span>RATIO <strong id="hudRatio">—</strong></span>
+          <span>MODEL <strong id="hudModel">—</strong></span>
+        </div>
+
+        <div class="actions">
+          <button id="upscaleBtn" class="btn btn--secondary" disabled>Upscale to 4K</button>
+          <a id="downloadBtn" class="btn btn--ghost" download="pixelforge-image.png" hidden>Download PNG</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app__footer">
+      Powered by Stability AI · Runs locally with your own API key · No images stored on a server
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
